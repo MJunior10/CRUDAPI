@@ -9,6 +9,7 @@
 package gerenciador.casadeFamilia.casadeFamilia.configuration;
 
 import gerenciador.casadeFamilia.api.config.ApiWebConfig;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.filter.CorsFilter;

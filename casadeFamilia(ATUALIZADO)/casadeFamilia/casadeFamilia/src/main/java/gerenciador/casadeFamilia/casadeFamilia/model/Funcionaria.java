@@ -39,6 +39,4 @@ public class Funcionaria {
     private String supervisor;
     @Column(name="Valor", nullable = false)
     private Float valorAtendimento;
-    @Column(name = "Nascimento", length = 10, nullable = false)
-    private Date dataNascimento;
 }

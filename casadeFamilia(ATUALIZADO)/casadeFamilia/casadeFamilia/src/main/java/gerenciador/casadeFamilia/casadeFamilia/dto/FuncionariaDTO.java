@@ -12,5 +12,4 @@ public @Data class FuncionariaDTO {
     private String especialidade;
     private String supervisor;
     private Float valorAtendimento;
-    private Date dataNascimento;
 }

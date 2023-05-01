@@ -5,9 +5,11 @@ import gerenciador.casadeFamilia.casadeFamilia.dto.FuncionariaDadosAlteravelDTO;
 import gerenciador.casadeFamilia.casadeFamilia.dto.FuncionariaListaDTO;
 import gerenciador.casadeFamilia.casadeFamilia.mapper.FuncionariaMapper;
 import gerenciador.casadeFamilia.casadeFamilia.model.Funcionaria;
+//import io.swagger.annotations.Api;
 import gerenciador.casadeFamilia.casadeFamilia.service.FuncionariaService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.Id;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +46,7 @@ public class FuncionariaController {
         FuncionariaDTO retorno = this.funcionariaMapper.toFuncionariaDTO(funcionariaIncluir);
         return retorno;
     }
-    @PutMapping
+    @PutMapping(path="/{id}")
     @Operation (description = "Metodo utilizado para alterar dados de uma Funcionaria")
     public FuncionariaDTO alterar(@RequestBody() FuncionariaDadosAlteravelDTO funcionaria, @PathVariable(name = "id") Long id){
     Funcionaria pFuncionaria = funcionariaMapper.toModelo(funcionaria);

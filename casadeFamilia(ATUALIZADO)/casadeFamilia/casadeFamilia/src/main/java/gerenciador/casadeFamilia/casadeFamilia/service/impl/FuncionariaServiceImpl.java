@@ -103,7 +103,7 @@ public Funcionaria excluir(Long Id){
     @Override
     public List<Funcionaria> listarTodos(){return funcionariaRepository.findAll();}
     @Override
-    public List<Funcionaria> localizar(Funcionaria funcionaria){
+   public List<Funcionaria> localizar(Funcionaria funcionaria){
         return this.funcionariaRepository.localizarPorFuncionaria(funcionaria);
     }
 }

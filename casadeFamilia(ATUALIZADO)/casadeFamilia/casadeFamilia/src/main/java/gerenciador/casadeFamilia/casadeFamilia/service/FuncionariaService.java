@@ -16,6 +16,6 @@ public interface FuncionariaService {
 
     public List<Funcionaria> listarTodos();
 
-    public List<Funcionaria> localizar(Funcionaria funcionaria);
+   public List<Funcionaria> localizar(Funcionaria funcionaria);
 
 }
