@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.*;
 
 @Service
 public class FuncionariaServiceImpl implements FuncionariaService {
@@ -21,6 +21,7 @@ public class FuncionariaServiceImpl implements FuncionariaService {
     @Override
     public Funcionaria incluir(Funcionaria funcionaria){
     this.validarCamposObrigatorios(funcionaria);
+    this.validarIdade(funcionaria);
     Funcionaria funcionariaincluida = this.gravarDados(funcionaria);
     return funcionariaincluida;
     }
@@ -31,27 +32,27 @@ public class FuncionariaServiceImpl implements FuncionariaService {
     private void validarDados(Funcionaria funcionaria) {
         List<String> erros = new ArrayList<>();
 
-        String validacaoApelido = validarApelidoExistente(funcionaria);
-        if(Strings.isNotEmpty(validacaoApelido)){
-            erros.add(validacaoApelido);
-        }
-
         if(!erros.isEmpty()){
             throw  new IllegalArgumentException("Erro ao Validar dados da Funcionaria: "+
                     String.join(",", erros)
             );
         }
     }
-    private String validarApelidoExistente(Funcionaria funcionaria) {
-        Optional<Funcionaria> funcionariaDoApelido = funcionariaRepository.findFuncionariaByApelido(funcionaria.getApelido());
-        String retorno = "";
-        if(funcionariaDoApelido.isPresent()){
-            String primeiroNome = funcionariaDoApelido.get().getApelido();
-            retorno =  "Apelido já utilizado no sistema, apelido:"+ funcionaria.getApelido()+
-                    " do Usuário: "+primeiroNome;
-        }
-        return retorno;
+    public  static int idade(LocalDate dataNascimento)
+    {
+        LocalDate dataAtual = LocalDate.now();
+        Period periodo = Period.between(dataNascimento, dataAtual);
+        return periodo.getYears();
     }
+    private void validarIdade(Funcionaria funcionaria)
+   {
+
+        if(idade(funcionaria.getDataNascimento()) < 18)
+        {
+            throw new IllegalArgumentException("Idade não pode ser menor que 18 anos");
+        }
+   }
+
     private void validarCamposObrigatorios(Funcionaria funcionaria) {
 
         if(Objects.isNull(funcionaria)){
@@ -63,6 +64,12 @@ public class FuncionariaServiceImpl implements FuncionariaService {
         }
         if(Strings.isEmpty(funcionaria.getApelido())){
             camposVazios.add("Apelido");
+        }
+        if(Strings.isEmpty(funcionaria.getSupervisor())){
+            camposVazios.add("Supervisor");
+        }
+        if((funcionaria.getDataNascimento() != null)){
+            camposVazios.add("Data Nascimento");
         }
         if(!camposVazios.isEmpty()) {
             throw  new IllegalArgumentException(

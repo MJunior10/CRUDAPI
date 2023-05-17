@@ -1,27 +1,19 @@
 package gerenciador.casadeFamilia.casadeFamilia.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 @Data
 @Entity
-@Table(name = "TBL_FUNCIONARIAS",
-        uniqueConstraints = {
-         @UniqueConstraint(name= Funcionaria.UK_FUNCIONARIA_APELIDO, columnNames = "apelido" )
-})
+@Table(name = "TBL_FUNCIONARIAS")
 
 public class Funcionaria {
-    public static final String UK_FUNCIONARIA_APELIDO = "uk_funcionaria_apelido";
-    @SequenceGenerator(
-            name="f_gerador_sequence",
-            sequenceName = "amigo_sequence",
-            allocationSize = 1
-    )
-
     @GeneratedValue(
             strategy = SEQUENCE,
             generator = "f_gerador_sequence"
@@ -37,6 +29,9 @@ public class Funcionaria {
     private String especialidade;
     @Column(name="supervisor",length = 200, nullable = false)
     private String supervisor;
+    @Min(100)
     @Column(name="Valor", nullable = false)
     private Float valorAtendimento;
+    @Column(name = "Nascimento", nullable = false)
+    private LocalDate dataNascimento;
 }
